@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlightCalc • Calculadora de Voo OGame</title>
+  <link rel="stylesheet" href="css/style-v3.css">
+  <link rel="stylesheet" href="css/custom-universe-modal.css">
+</head>
+<body>
+
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="logo-section">
+      <div class="logo">🚀</div>
+      <h1>FlightCalc MaRS</h1>
+      <span class="version">v2.0</span>
+    </div>
+    
+    <nav class="nav-menu">
+      <a href="#section-1" class="nav-item active">
+        <span class="nav-icon">📥</span>
+        <span class="nav-text">Importação API</span>
+      </a>
+      <a href="#section-2" class="nav-item">
+        <span class="nav-icon">🌌</span>
+        <span class="nav-text">Universo</span>
+      </a>
+      <a href="#section-3" class="nav-item">
+        <span class="nav-icon">👤</span>
+        <span class="nav-text">Jogador</span>
+      </a>
+      <a href="#section-4" class="nav-item">
+        <span class="nav-icon">🧬</span>
+        <span class="nav-text">Bónus</span>
+      </a>
+      <a href="#section-5" class="nav-item">
+        <span class="nav-icon">🛸</span>
+        <span class="nav-text">Frota</span>
+      </a>
+      <a href="#section-6" class="nav-item">
+        <span class="nav-icon">🎯</span>
+        <span class="nav-text">Coordenadas</span>
+      </a>
+      <a href="#section-7" class="nav-item">
+        <span class="nav-icon">📊</span>
+        <span class="nav-text">Resultados</span>
+      </a>
+      <a href="#section-8" class="nav-item">
+        <span class="nav-icon">↩️</span>
+        <span class="nav-text">Retorno</span>
+      </a>
+    </nav>
+    
+    <div class="theme-toggle-wrapper">
+      <button id="theme-toggle" class="theme-toggle" title="Alternar tema">
+        <span class="theme-icon">🌙</span>
+        <span class="theme-label">Tema Escuro</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <!-- ==================== SECTION 1: IMPORTAÇÃO API ==================== -->
+    <section class="content-section" id="section-1">
+      <div class="section-header">
+        <h2>1) Importação via API</h2>
+        <button class="collapse-btn accordion-toggle accordion-btn" data-target="acc1">−</button>
+      </div>
+      
+      <div class="section-content accordion-content" id="acc1">
+        <div class="alert-info">
+          <strong>ℹ️ Como importar dados para pré-preencher informação:</strong>
+          <ul>
+            <li>Copia a API completa do teu relatório de espionagem (formato: sr-pt-XXX-...) e cola-a no campo "SR Key". Clica "Importar API SR."</li>
+            <li>Para simulares com os dados da tua conta, copia no jogo os valores de API2 e cola aqui no campo "Importação via API2" em baixo e clica "Importar API 2".</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-header">SR API</div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group flex-2">
+                <label>SR API</label>
+                <input type="text" id="api-code" placeholder="sr-pt-160-xxxxxxxx..." class="form-input" />
+              </div>
+              <div class="form-group-inline">
+                <button id="api-import-json" class="btn btn-primary" type="button">Importar SR API</button>
+                <button id="api-open" class="btn btn-secondary" type="button">Abrir SR API</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Importação via API2</div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>JSON da API2</label>
+              <textarea id="api-json-input" rows="6" placeholder="Cola aqui o relatório completo da API2..." class="form-textarea"></textarea>
+            </div>
+            <div class="form-actions">
+              <button id="api-import-json-raw" class="btn btn-primary" type="button">Importar API2</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 2: UNIVERSO ==================== -->
+    <section class="content-section" id="section-2">
+      <div class="section-header">
+        <h2>2) Configuração do Universo</h2>
+        <button class="collapse-btn accordion-toggle accordion-btn" data-target="acc2">−</button>
+      </div>
+      
+      <div class="section-content accordion-content" id="acc2">
+        <div class="alert-info">
+          <strong>⚠️ Importante:</strong> Seleciona a comunidade e o universo correto. As velocidades das missões de frota variam entre universos e afetam todos os cálculos mas são automaticamente preenhidos com a tua seleção. <br>Garante que aplicas o tipo de galáxia e de sistema solar correto, bem como, o fator de redução de consumo de deutério de acordo com o teu universo.
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Comunidade</label>
+                <select id="select-community" class="form-select">
+                  <option value="">Seleciona a comunidade</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Universo</label>
+                <select id="select-universe" class="form-select">
+                  <option value="">Seleciona o universo</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 7fr 3fr; gap: 1.5rem; align-items: start;">
+          <!-- Coluna Esquerda: Configurações (70%) -->
+          <div class="card">
+            <div class="card-body">
+              <div class="universe-settings">
+                <div class="setting-item">
+                  <span class="setting-label">Galáxias</span>
+                  <span class="setting-value mono" id="universe-galaxies">—</span>
+                </div>
+                <div class="setting-item">
+                  <span class="setting-label">Sistemas/Galáxia</span>
+                  <span class="setting-value mono" id="universe-systems">—</span>
+                </div>
+                <div class="setting-item">
+                  <span class="setting-label">Galáxias Circulares</span>
+                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <label class="toggle">
+                      <input type="checkbox" id="donut-galaxy-check" class="toggle-input" checked>
+                      <span class="toggle-slider"></span>
+                    </label>
+                    <span id="donut-galaxy" class="setting-value">Sim</span>
+                  </div>
+                </div>
+                <div class="setting-item">
+                  <span class="setting-label">Sistemas Circulares</span>
+                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <label class="toggle">
+                      <input type="checkbox" id="donut-system-check" class="toggle-input" checked>
+                      <span class="toggle-slider"></span>
+                    </label>
+                    <span id="donut-system" class="setting-value">Sim</span>
+                  </div>
+                </div>
+                <div class="setting-item">
+                  <span class="setting-label">Sondas com Capacidade</span>
+                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <label class="toggle">
+                      <input type="checkbox" id="espionage-probe-raids-check" class="toggle-input">
+                      <span class="toggle-slider"></span>
+                    </label>
+                    <span id="espionage-probe-raids-text" class="setting-value">Não</span>
+                  </div>
+                </div>
+                <div class="setting-item">
+                  <span class="setting-label">Consumo de Deutério</span>
+                  <select id="universe-deut-factor" class="form-select-inline">
+                    <option value="0.5">50%</option>
+                    <option value="0.6">60%</option>
+                    <option value="0.7">70%</option>
+                    <option value="0.8">80%</option>
+                    <option value="0.9">90%</option>
+                    <option value="1.0" selected>100%</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna Direita: Velocidades (30%) -->
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="stat-card">
+              <div class="stat-label">Vel. Frota (Amigáveis)</div>
+              <div class="stat-value mono" id="fleet-speed-peaceful">—</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Vel. Frota (Hostis)</div>
+              <div class="stat-value mono" id="fleet-speed-war">—</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Vel. Frota (Manter Posição)</div>
+              <div class="stat-value mono" id="fleet-speed-holding">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 3: JOGADOR ==================== -->
+    <section class="content-section" id="section-3">
+      <div class="section-header">
+        <h2>3) Configurações do Jogador</h2>
+        <button class="collapse-btn accordion-toggle accordion-btn" data-target="acc3">−</button>
+      </div>
+      
+      <div class="section-content accordion-content" id="acc3">
+        <div class="alert-info">
+          <strong>💡 Dica:</strong> Os níveis de tecnologia afetam diretamente a velocidade da tua frota. Certifica-te que os valores estão corretos para cálculos precisos. A importação via SR API e API2 preenche automaticamente todos os campos em baixo.
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Classe do jogador</label>
+                <select id="player-class" class="form-select">
+                  <option value="-1">Sem classe</option>
+                  <option value="0">Colecionador</option>
+                  <option value="1">General</option>
+                  <option value="2">Descobridor</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Classe da Aliança</label>
+                <select id="alliance-class" class="form-select">
+                  <option value="0">Sem classe</option>
+                  <option value="1">Comerciantes</option>
+                  <option value="2">Guerreiros</option>
+                  <option value="3">Investigadores</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-4">
+              <div class="form-group">
+                <label>Motor de Combustão (115)</label>
+                <input type="number" id="tech-combustion" min="0" max="50" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label>Motor de Impulso (117)</label>
+                <input type="number" id="tech-impulse" min="0" max="50" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label>Motor Hiperespaço (118)</label>
+                <input type="number" id="tech-hyperspace" min="0" max="50" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label>Tec. Hiperespaço (114)</label>
+                <input type="number" id="tech-hyperspace-tech" min="0" max="50" class="form-input" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 4: BÓNUS FORMA DE VIDA ==================== -->
+    <section class="content-section" id="section-4">
+      <div class="section-header">
+        <h2>4) Bónus de Forma de Vida</h2>
+        <button class="collapse-btn accordion-toggle accordion-btn" data-target="acc4">−</button>
+      </div>
+      
+      <div class="section-content accordion-content" id="acc4">
+        <div class="info-box">
+          <p><strong>ℹ️ Bónus de Classe:</strong></p>
+          <ul>
+            <li><strong>Colecionador:</strong> +100% velocidade Cargueiros | +25% carga SC/LC</li>
+            <li><strong>General:</strong> +100% velocidade combate/reciclador | -50% consumo deut. | +20% carga Reciclador/Exploradora</li>
+          </ul>
+          <p><small>O <strong>Bónus de Classe (%)</strong> é importado automaticamente da API e amplifica os bónus base.</small></p>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Redução Consumo Deut. General (%)</label>
+                <input type="number" id="lf-deut-reduction" min="0" max="90" value="50" class="form-input" />
+                <small style="color: var(--text-muted); font-size: 0.85rem;">Apenas para classe General. Padrão: 50% | Máximo: 90%</small>
+              </div>
+              <div class="form-group">
+                <label>Bónus de Classe (%)</label>
+                <input type="number" id="character-class-booster" min="0" step="0.001" value="0" class="form-input" readonly />
+                <small style="color: var(--text-muted); font-size: 0.85rem;">Importado automaticamente da API</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nave</th>
+                  <th>Velocidade (%)</th>
+                  <th>Carga (%)</th>
+                  <th>Deut. (%)</th>
+                </tr>
+              </thead>
+              <tbody id="lf-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 5: FROTA ==================== -->
+    <section class="content-section" id="section-5">
+      <div class="section-header">
+        <h2>5) Composição da Frota</h2>
+        <button class="collapse-btn accordion-toggle accordion-btn" data-target="acc5">−</button>
+      </div>
+      
+      <div class="section-content accordion-content" id="acc5">
+        <div class="card">
+          <div class="fleet-table-2col">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Nave</th>
+                    <th>Quantidade</th>
+                    <th>Velocidade base</th>
+                  </tr>
+                </thead>
+                <tbody id="fleet-table-body"></tbody>
+              </table>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Nave</th>
+                    <th>Quantidade</th>
+                    <th>Velocidade base</th>
+                  </tr>
+                </thead>
+                <tbody id="fleet-table-body-2"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 6: COORDENADAS ==================== -->
+    <section class="content-section" id="section-6">
+      <div class="section-header">
+        <h2>6) Coordenadas e Missão</h2>
+        <button class="collapse-btn accordion-toggle accordion-btn" data-target="acc6">−</button>
+      </div>
+      
+      <div class="section-content accordion-content" id="acc6">
+        <div class="alert-info">
+          <strong>🎯 Formatos aceites:</strong> Galáxia (1-9), Sistema (1-499), Posição (1-17). 
+          <strong>Dica:</strong> Usa o botão <strong>⇄</strong> para trocar origem e destino rapidamente!
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Origem</label>
+                <div class="coord-inputs">
+                  <input type="number" id="coord-origin-g" min="1" max="9" placeholder="G" class="coord-input">
+                  <span class="coord-sep">:</span>
+                  <input type="number" id="coord-origin-s" min="1" max="499" placeholder="S" class="coord-input">
+                  <span class="coord-sep">:</span>
+                  <input type="number" id="coord-origin-p" min="1" max="17" placeholder="P" class="coord-input">
+                </div>
+              </div>
+
+              <div class="form-group coord-swap-group">
+                <label>&nbsp;</label>
+                <button type="button" id="swap-coords-btn" class="btn-swap" title="Trocar coordenadas">
+                  <span class="swap-icon">⇄</span>
+                </button>
+              </div>
+
+              <div class="form-group">
+                <label>Destino</label>
+                <div class="coord-inputs">
+                  <input type="number" id="coord-dest-g" min="1" max="9" placeholder="G" class="coord-input">
+                  <span class="coord-sep">:</span>
+                  <input type="number" id="coord-dest-s" min="1" max="499" placeholder="S" class="coord-input">
+                  <span class="coord-sep">:</span>
+                  <input type="number" id="coord-dest-p" min="1" max="17" placeholder="P" class="coord-input">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Missão</label>
+                <select id="mission-type" class="form-select">
+                  <option value="peaceful">Amigável</option>
+                  <option value="war">Hostil</option>
+                  <option value="holding">Manter Posição</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                  <input type="checkbox" id="same-alliance" style="cursor: pointer;" disabled />
+                  <span id="same-alliance-label">Membro da mesma aliança</span>
+                </label>
+                <small id="same-alliance-hint" style="color: var(--text-muted); font-size: 0.85rem; display: none;">
+                  ⚔️ Aliança Guerreiros: +10% velocidade para Estrela da Morte
+                </small>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Velocidade mínima da frota (override)</label>
+                <input type="number" id="fleet-speed-override" min="1" step="1" placeholder="vazio = usar cálculo real" class="form-input">
+              </div>
+              <div class="form-group">
+                <label>Sistemas ignorados (mesma galáxia)</label>
+                <input type="number" id="ignored-systems" min="0" value="0" class="form-input">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid-2">
+          <div class="stat-card">
+            <div class="stat-label">Distância</div>
+            <div class="stat-value mono" id="distance-read">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Velocidade mínima da frota</div>
+            <div class="stat-value mono" id="minspeed-read">—</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 7: RESULTADOS ==================== -->
+    <section class="content-section" id="section-7">
+      <div class="section-header">
+        <h2>7) Tempos de Voo</h2>
+        <button class="collapse-btn accordion-toggle accordion-btn" data-target="acc7">−</button>
+      </div>
+      
+      <div class="section-content accordion-content" id="acc7">
+        <div class="alert-info">
+          <strong>✅ Como interpretar:</strong> <strong>%</strong> = velocidade da frota (10% mais lenta, 100% máxima) • <strong>Duração</strong> = tempo de viagem (só ida) • <strong>Consumo</strong> = deutério total (ida + volta) • <strong>Capacidade</strong> = carga disponível após consumo
+        </div>
+
+        <div class="card card-results">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>%</th>
+                  <th>Duração</th>
+                  <th>Consumo Deut.</th>
+                  <th>Capacidade</th>
+                </tr>
+              </thead>
+              <tbody id="flight-times-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 8: RETORNO ==================== -->
+    <section class="content-section" id="section-8">
+      <div class="section-header">
+        <h2>8) Cálculo de Retorno de Frota</h2>
+        <button class="collapse-btn accordion-toggle accordion-btn" data-target="acc8">−</button>
+      </div>
+      
+      <div class="section-content accordion-content" id="acc8">
+        <div class="return-grid">
+          <div class="card">
+            <div class="card-header">Inputs</div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Velocidade de voo</label>
+                <select id="return-speed" class="form-select"></select>
+              </div>
+              <div class="form-group">
+                <label>Hora conhecida de chegada</label>
+                <input type="text" id="arrival-time" placeholder="dd/mm/aaaa hh:mm:ss" class="form-input">
+              </div>
+              <div class="form-group">
+                <label>Hora de cancelamento (recall)</label>
+                <input type="text" id="cancel-time" placeholder="dd/mm/aaaa hh:mm:ss" class="form-input">
+              </div>
+              <div class="form-group">
+                <label>Frequência do Phalanx (segundos)</label>
+                <input type="number" id="phalanx-freq" min="0" placeholder="ex: 15" class="form-input">
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">Resultados</div>
+            <div class="card-body">
+              <div class="result-item">
+                <span class="result-label">Hora de saída</span>
+                <span class="result-value mono" id="ret-departure">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Tempo efetivamente voado</span>
+                <span class="result-value mono" id="ret-flown">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Hora de retorno</span>
+                <span class="result-value mono" id="ret-return">—</span>
+              </div>
+
+              <div id="phalanx-result" class="phalanx-box" style="display:none">
+                <div class="phalanx-title">Janela de Phalanx</div>
+                <div class="phalanx-value mono" id="ret-phalanx-min">—</div>
+                <div class="phalanx-value mono" id="ret-phalanx-max">—</div>
+              </div>
+
+              <div id="ret-error" class="error-message mono"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© FlightCalc MaRS – calculadora de voo OGame (v2.0)<br>
+     Wezen @ [MaRS] - Cosmos.pt | Himalia.pt</p>
+  </footer>
+
+  <!-- ==================== MODAL: UNIVERSO PERSONALIZADO ==================== -->
+  <div id="custom-universe-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-container">
+      <!-- Header -->
+      <div class="modal-header">
+        <h3>⚙️ Universo Personalizado</h3>
+        <button id="modal-btn-close" class="modal-close">&times;</button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        
+        <!-- Nome do Universo -->
+        <div class="modal-section">
+          <h4>Identificação</h4>
+          <div class="modal-form-group">
+            <label>Nome do Universo</label>
+            <input type="text" id="modal-name" class="modal-input" placeholder="Ex: Universo de Testes" maxlength="50">
+          </div>
+        </div>
+
+        <!-- Configurações -->
+        <div class="modal-section">
+          <h4>Estrutura do Universo</h4>
+          <div class="modal-grid">
+            <div class="modal-col">
+              <div class="modal-form-group">
+                <label>Galáxias</label>
+                <input type="number" id="modal-galaxies" class="modal-input" min="1" max="9" value="9">
+              </div>
+              <div class="modal-form-group">
+                <label>Sistemas por Galáxia</label>
+                <input type="number" id="modal-systems" class="modal-input" min="1" max="499" value="499">
+              </div>
+              <div class="modal-checkbox">
+                <input type="checkbox" id="modal-donut-galaxy" checked>
+                <label for="modal-donut-galaxy">Galáxias Circulares</label>
+              </div>
+              <div class="modal-checkbox">
+                <input type="checkbox" id="modal-donut-system" checked>
+                <label for="modal-donut-system">Sistemas Circulares</label>
+              </div>
+              <div class="modal-checkbox">
+                <input type="checkbox" id="modal-probe-cargo">
+                <label for="modal-probe-cargo">Sondas com Capacidade</label>
+              </div>
+            </div>
+
+            <div class="modal-col">
+              <div class="modal-form-group">
+                <label>Vel. Frota (Pacífica)</label>
+                <select id="modal-speed-peaceful" class="modal-select">
+                  <option value="1">1x</option>
+                  <option value="2">2x</option>
+                  <option value="3">3x</option>
+                  <option value="4">4x</option>
+                  <option value="5">5x</option>
+                  <option value="6">6x</option>
+                  <option value="7">7x</option>
+                  <option value="8">8x</option>
+                  <option value="9">9x</option>
+                  <option value="10">10x</option>
+                </select>
+              </div>
+              <div class="modal-form-group">
+                <label>Vel. Frota (Hostil)</label>
+                <select id="modal-speed-war" class="modal-select">
+                  <option value="1">1x</option>
+                  <option value="2">2x</option>
+                  <option value="3">3x</option>
+                  <option value="4">4x</option>
+                  <option value="5">5x</option>
+                  <option value="6">6x</option>
+                  <option value="7">7x</option>
+                  <option value="8">8x</option>
+                  <option value="9">9x</option>
+                  <option value="10">10x</option>
+                </select>
+              </div>
+              <div class="modal-form-group">
+                <label>Vel. Frota (Manter Posição)</label>
+                <select id="modal-speed-holding" class="modal-select">
+                  <option value="1">1x</option>
+                  <option value="2">2x</option>
+                  <option value="3">3x</option>
+                  <option value="4">4x</option>
+                  <option value="5">5x</option>
+                  <option value="6">6x</option>
+                  <option value="7">7x</option>
+                  <option value="8">8x</option>
+                  <option value="9">9x</option>
+                  <option value="10">10x</option>
+                </select>
+              </div>
+              <div class="modal-form-group">
+                <label>Consumo de Deutério</label>
+                <select id="modal-deut-percent" class="modal-select">
+                  <option value="100">100% (normal)</option>
+                  <option value="90">90% (-10%)</option>
+                  <option value="80">80% (-20%)</option>
+                  <option value="70">70% (-30%)</option>
+                  <option value="60">60% (-40%)</option>
+                  <option value="50">50% (-50%)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Presets Guardados -->
+        <div class="modal-section">
+          <h4>Presets Guardados</h4>
+          <div id="modal-presets-list" class="modal-presets-container">
+            <div class="modal-empty-state">
+              <p>📦 Nenhum preset guardado</p>
+              <small>Configura um universo e clica "Guardar Preset"</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <div class="modal-footer-left">
+          <button id="modal-btn-import" class="modal-btn modal-btn-secondary">📥 Importar</button>
+          <button id="modal-btn-export" class="modal-btn modal-btn-secondary">📤 Exportar</button>
+          <button id="modal-btn-reset" class="modal-btn modal-btn-secondary">↩️ Repor Padrão</button>
+        </div>
+        <div class="modal-footer-right">
+          <button id="modal-btn-cancel" class="modal-btn modal-btn-cancel">Cancelar</button>
+          <button id="modal-btn-save" class="modal-btn modal-btn-success">💾 Guardar Preset</button>
+          <button id="modal-btn-apply" class="modal-btn modal-btn-primary">✓ Aplicar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/universesLoader.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/apiImporter.js"></script>
+  <script src="js/customUniverses-modal.js"></script>
+  <script src="js/accordion-v3.js"></script>
+</body>
+</html>
