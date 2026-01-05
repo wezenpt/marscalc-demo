@@ -158,10 +158,10 @@
   // ======================================================================
 
   const SHIP_LABELS = [
-    "Pequeno Cargueiro","Grande Cargueiro","Caça Ligeiro","Caça Pesado",
+    "Cargueiro Pequeno","Cargueiro Grande","Caça Ligeiro","Caça Pesado",
     "Cruzador","Nave de Batalha","Nave Colonização","Reciclador",
-    "Sonda","Bombardeiro","Satélite","Destruidor",
-    "Estrela da Morte","Interceptor","Ceifeiro","Exploradora"
+    "Sonda Esp.","Bombardeiro","Satélite","Destruidor",
+    "Estrela da Morte","Interceptor","Ceifeira","Exploradora"
   ];
 
   const SHIP_IDS = [
