@@ -473,25 +473,6 @@
     }
   }
 
-  function handleOpenAPI(ev) {
-    ev.preventDefault();
-
-    try {
-      const token = $("api-code").value.trim();
-      if (!token) {
-        alert("Insira um SR Key");
-        return;
-      }
-
-      const url = `${WORKER_URL}/report/${encodeURIComponent(token)}`;
-      window.open(url, "_blank");
-
-    } catch (e) {
-      console.error("[apiImporter] ERRO:", e);
-      alert(`Erro: ${e.message}`);
-    }
-  }
-
   // ============================================================
   // INIT
   // ============================================================
